@@ -13,6 +13,7 @@ function PokemonDetails({pokemonId}) {
                 const firstRes = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
                 const data = firstRes.data;
                 setPokemonData(data); 
+                setLoading(false);
             } catch(error) {
                 console.error('Erreur:', error); 
             }
@@ -28,14 +29,14 @@ function PokemonDetails({pokemonId}) {
                 loading ? (<p>Page Loading...</p>) : 
                 (
                 <>
-                    <p>Number : {pokemonData.id}</p>
-                    <h2>Name : {pokemonData.name}</h2>
-                    <img src={pokemonData.sprites.front_default} alt="pokemon image" />
-                    <p>Types : {pokemonData.types.map((type) => type.type.name).join(', ')}</p>
+                    <p>Number : {pokemonData && pokemonData.id}</p>
+                    <h2>Name : {pokemonData && pokemonData.name}</h2>
+                    <img src={pokemonData && pokemonData.sprites.front_default} alt="pokemon image" />
+                    <p>Types : {pokemonData && pokemonData.types.map((type) => type.type.name).join(', ')}</p>
                     <p>Stats :</p>
                     <ul>
                         {
-                            pokemonData.stats.map((stat) => (
+                            pokemonData && pokemonData.stats.map((stat) => (
                                 <li key={stat.stat.name}>{stat.stat.name}:{stat.base_stat}</li>
                             ))
                         }
