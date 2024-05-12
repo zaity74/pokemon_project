@@ -15,8 +15,8 @@ root.render(
     <Router>
       <Routes>
         <Route path="/pokedex" element={<Pokedex />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/pokemon" element={<Pokemon />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/pokemon/:id" element={<Pokemon />} />
 
       </Routes>
     </Router>

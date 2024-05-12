@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"; 
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 function CardItems() {
     // State 
@@ -36,6 +37,7 @@ function CardItems() {
                 loading ? ( <p>Page Loading...</p>) : 
 
                 (pokemonRes && pokemonRes.map((post, id) => (
+                <Link to={`/pokemon/${post.id}`}>
                     <div className="card" key={id}>
                         <h2>Name : {post.name}</h2>
                         <p>Number : {post.id}</p>
@@ -48,6 +50,7 @@ function CardItems() {
                             ))}
                         </ul>
                     </div>
+                </Link>
                 )))
             }
         </div>
