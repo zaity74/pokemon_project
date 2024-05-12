@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Pokedex from './pages/pokedex';
 import Home from './pages/home';
+import Pokemon from './pages/pokemon';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,6 +16,7 @@ root.render(
       <Routes>
         <Route path="/pokedex" element={<Pokedex />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/pokemon" element={<Pokemon />} />
 
       </Routes>
     </Router>
