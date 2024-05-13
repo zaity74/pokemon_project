@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
+import SearchForm from "./form";
+import Pokemon from "../pages/pokemon";
 
 function CardItems() {
     // State 
@@ -33,7 +35,8 @@ function CardItems() {
 
     return (
         <div>
-            {
+            <SearchForm pokemons={pokemonRes} setPokemons={setPokemonRes} />
+            <form />            {
                 loading ? (<p>Page Loading...</p>) :
 
                     (pokemonRes && pokemonRes.map((post, id) => (
