@@ -5,6 +5,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Pokedex from './pages/pokedex';
+import Home from './pages/home';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,6 +14,8 @@ root.render(
     <Router>
       <Routes>
         <Route path="/pokedex" element={<Pokedex />} />
+        <Route path="/home" element={<Home />} />
+
       </Routes>
     </Router>
   </React.StrictMode>
