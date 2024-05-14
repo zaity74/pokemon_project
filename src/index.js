@@ -8,6 +8,8 @@ import Pokedex from './pages/pokedex';
 import Home from './pages/home';
 import Pokemon from './pages/pokemon';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

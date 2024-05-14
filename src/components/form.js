@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 function SearchForm({ pokemons, setFilteredPokemons }) {
     const [term, setTerm] = useState('');
 
@@ -15,8 +16,8 @@ function SearchForm({ pokemons, setFilteredPokemons }) {
     }
 
     return (
-        <div>
-            <input type="text" placeholder="Rechercher un pokémon" value={term} onChange={handleInputChange} />
+        <div className="container">
+            <input type="text" placeholder="Rechercher un pokémon" value={term} onChange={handleInputChange} className="form-control mb-3" />
         </div>
     );
 }

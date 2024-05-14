@@ -11,7 +11,14 @@ function Home() {
 
         <div>
             <form />
-            <h1>Liste Pokemons</h1>
+            <nav>
+                <div className="nav-wrapper teal">
+                    <a href="#" className="brand-logo center">Pokédox</a>
+                </div>
+            </nav>
+            <div>
+                <h1 style={{ textAlign: 'center' }}>Liste des pokémons</h1>
+            </div>
             <CardItems />
         </div>
     );

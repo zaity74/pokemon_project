@@ -31,45 +31,73 @@ function CardItems() {
     }, []);
 
     return (
-        <div>
+        <div className="container">
             <SearchForm pokemons={pokemonRes} setFilteredPokemons={setFilteredPokemons} />
-            {
-                loading ? (<p>Page Loading...</p>) :
-                    (filteredPokemons.length > 0 ? filteredPokemons.map((post, id) => (
-                        <Link to={`/pokemon/${post.id}`} key={id}>
-                            <div className="card">
-                                <h2>Name : {post.name}</h2>
-                                <p>Number : {post.id}</p>
-                                <img src={post.sprites.front_default} alt="pokemon image" />
-                                <p>Types : {post.types.map((type) => type.type.name).join(', ')}</p>
-                                <p>Stats : </p>
-                                <ul>
-                                    {post.stats.map((stat) => (
-                                        <li key={stat.stat.name}>{stat.stat.name}:{stat.base_stat}</li>
-                                    ))}
-                                </ul>
+
+
+            {loading ? (
+                <p className="text-center">Page Loading...</p>
+            ) : (
+                <div className="row row-cols-1 row-cols-md-3">
+                    {filteredPokemons.length > 0 ? filteredPokemons.map((pokemon, id) => (
+                        <div key={id} className="col">
+
+                            <div className="card mb-3">
+                                <div className="row g-0">
+                                    <div className="col-md-4 d-flex align-items-center justify-content-center">
+                                        <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid" style={{ objectFit: 'cover' }} />
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-body" style={{ marginLeft: '20px' }}>
+                                            <Link to={`/pokemon/${pokemon.id}`}>
+                                                <h5 className="card-title">{pokemon.name}</h5>
+                                            </Link>
+                                            <p className="card-text">Number: {pokemon.id}</p>
+                                            <p className="card-text">Types: {pokemon.types.map((type) => type.type.name).join(', ')}</p>
+                                            <p className="card-text">Stats:</p>
+                                            <ul>
+                                                {pokemon.stats.map((stat, index) => (
+                                                    <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </Link>
-                    )) : 
-                    (pokemonRes && pokemonRes.map((post, id) => ( // Ajout de parenthèses ici
-                        <Link to={`/pokemon/${post.id}`} key={id}>
-                            <div className="card">
-                                <h2>Name : {post.name}</h2>
-                                <p>Number : {post.id}</p>
-                                <img src={post.sprites.front_default} alt="pokemon image" />
-                                <p>Types : {post.types.map((type) => type.type.name).join(', ')}</p>
-                                <p>Stats : </p>
-                                <ul>
-                                    {post.stats.map((stat) => (
-                                        <li key={stat.stat.name}>{stat.stat.name}:{stat.base_stat}</li>
-                                    ))}
-                                </ul>
+
+                        </div>
+                    )) : pokemonRes && pokemonRes.map((pokemon, id) => (
+                        <div key={id} className="col">
+
+                            <div className="card mb-3">
+                                <div className="row g-0">
+                                    <div className="col-md-4 d-flex align-items-center justify-content-center">
+                                        <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid" style={{ objectFit: 'cover' }} />
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-body" style={{ marginLeft: '20px' }}>
+                                            <Link to={`/pokemon/${pokemon.id}`}>
+                                                <h5 className="card-title">{pokemon.name}</h5>
+                                            </Link>
+                                            <p className="card-text">Number: {pokemon.id}</p>
+                                            <p className="card-text">Types: {pokemon.types.map((type) => type.type.name).join(', ')}</p>
+                                            <p className="card-text">Stats:</p>
+                                            <ul>
+                                                {pokemon.stats.map((stat, index) => (
+                                                    <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </Link>
-                    ))) // Parenthèses fermantes ici
-                )
+
+                        </div>
+                    ))}
+                </div>
+            )
             }
-        </div>
+        </div >
     );
 }
 
