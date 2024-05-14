@@ -54,11 +54,17 @@ function Pokedex() {
     //Affichage 
 
     return (
+    <>
+        <Navbar />
+        <br></br>
+        <br></br>
+        <div>
+            <h1 style={{ textAlign: 'center' }}>Mon Pokedex</h1>
+        </div>
         <div className="container">
-            <Navbar />
             <SearchForm pokemons={pokedex} setFilteredPokemons={setFilteredPokedex} />
 
-            <Link onClick={cliePokedex}><FaRegTrashAlt /></Link>
+            <Link onClick={cliePokedex}><FaRegTrashAlt />Vider le pokedex</Link>
 
             {loading ? (
                 <p className="text-center">Page Loading...</p>
@@ -126,6 +132,8 @@ function Pokedex() {
             )
             }
         </div >
+    
+    </>
     );
 }
 

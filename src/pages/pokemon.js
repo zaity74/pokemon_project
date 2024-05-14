@@ -11,7 +11,8 @@ function Pokemon(props) {
     return (
         <>
             <Navbar />
-
+            <br></br>
+            <br></br>
             <PokemonDetails pokemonId={id} />
         </>
     )

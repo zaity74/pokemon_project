@@ -26,6 +26,7 @@ function PokemonDetails({ pokemonId }) {
     }, [pokemonId]);
 
     return (
+    <>
         <div className="container">
             {loading ? (
                 <p className="text-center">Page Loading...</p>
@@ -33,7 +34,9 @@ function PokemonDetails({ pokemonId }) {
                 pokemon ? (
                     <div className="row">
                         <div className="col s12 m8 offset-m2">
-                            <h2 className="header center">{pokemon.name}</h2>
+                            <div>
+                                <h1 style={{ textAlign: 'center' }}>Détails du pokémon : {pokemon.name}</h1>
+                            </div>
                             <div className="card horizontal hoverable">
                                 <div className="card-image" style={{ flex: 'none' }}>
                                     <img src={pokemon.sprites.front_default} alt={pokemon.name} style={{ width: '200px', height: '200px', objectFit: 'cover' }} />
@@ -82,6 +85,8 @@ function PokemonDetails({ pokemonId }) {
                 )
             )}
         </div>
+    
+    </>
     );
 }
 
