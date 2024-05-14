@@ -70,12 +70,9 @@ function PokemonDetails({ pokemonId }) {
                                         </table>
                                     </div>
                                     <div className="card-action">
-                                        <span>
-                                            {<Link to={"/"} onClick={(e) => { e.preventDefault(); }}>Retour</Link>}
-
-                                        </span>
-
+                                        <Link to={"/"} >Retour</Link>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

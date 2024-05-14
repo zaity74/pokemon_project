@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 import SearchForm from "./form";
 
 function CardItems() {
+    //State
     const [pokemonRes, setPokemonRes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filteredPokemons, setFilteredPokemons] = useState([]);
+    const [pokedex, setPokedex] = useState([]);
 
+    //comportment 
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -30,6 +33,24 @@ function CardItems() {
         fetchData();
     }, []);
 
+    const handleaddtopokedex = (id) => {
+
+        if (pokedex.some(pokemon => pokemon.id === id)) {
+            return;
+        }
+
+        const pokemonToAdd = pokemonRes.find(pokemon => pokemon.id === id);
+        setPokedex(prevPokedex => [...prevPokedex, pokemonToAdd])
+
+        //ajouter au localStorage
+        const storedPokedex = JSON.parse(localStorage.getItem("pokedex")) || [];
+        localStorage.setItem("pokedex", JSON.stringify([...storedPokedex, pokemonToAdd]));
+
+
+    }
+
+
+    //Affichage
     return (
         <div className="container">
             <SearchForm pokemons={pokemonRes} setFilteredPokemons={setFilteredPokemons} />
@@ -87,6 +108,8 @@ function CardItems() {
                                                     <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
                                                 ))}
                                             </ul>
+
+                                            <button type="button" class="btn btn-danger" onClick={() => handleaddtopokedex(pokemon.id)}>Ajouter aux Pokédex</button>
                                         </div>
                                     </div>
                                 </div>
