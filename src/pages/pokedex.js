@@ -76,7 +76,7 @@ function Pokedex() {
                             <div className="card mb-3">
                                 <div className="row g-0">
                                     <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                        <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid" style={{ objectFit: 'cover' }} />
+                                        <img src={pokemon?.sprites?.front_default} alt="pokemon image" className="img-fluid" style={{ objectFit: 'cover' }} />
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body" style={{ marginLeft: '20px' }}>
@@ -84,13 +84,6 @@ function Pokedex() {
                                                 <h5 className="card-title">{pokemon.name}</h5>
                                             </Link>
                                             <p className="card-text">Number: {pokemon.id}</p>
-                                            <p className="card-text">Types: {pokemon.types.map((type) => type.type.name).join(', ')}</p>
-                                            <p className="card-text">Stats:</p>
-                                            <ul>
-                                                {pokemon.stats.map((stat, index) => (
-                                                    <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
-                                                ))}
-                                            </ul>
                                             <Link onClick={() => removeFromPokedex(pokemon.id)}><FaRegTrashAlt /></Link>
                                         </div>
                                     </div>
@@ -98,13 +91,13 @@ function Pokedex() {
                             </div>
 
                         </div>
-                    )) : storedPokedex.length > 0 ? storedPokedex.map((pokemon, id) => (
+                    )) : storedPokedex &&  storedPokedex.length > 0 ? storedPokedex && storedPokedex.map((pokemon, id) => (
                         <div key={id} className="col">
 
                             <div className="card mb-3">
                                 <div className="row g-0">
                                     <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                        <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid" style={{ objectFit: 'cover' }} />
+                                        <img src={pokemon && pokemon.sprites.front_default} alt="pokemon image" className="img-fluid" style={{ objectFit: 'cover' }} />
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body" style={{ marginLeft: '20px' }}>
@@ -112,13 +105,6 @@ function Pokedex() {
                                                 <h5 className="card-title">{pokemon.name}</h5>
                                             </Link>
                                             <p className="card-text">Number: {pokemon.id}</p>
-                                            <p className="card-text">Types: {pokemon.types.map((type) => type.type.name).join(', ')}</p>
-                                            <p className="card-text">Stats:</p>
-                                            <ul>
-                                                {pokemon.stats.map((stat, index) => (
-                                                    <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
-                                                ))}
-                                            </ul>
 
                                             <Link onClick={() => removeFromPokedex(pokemon.id)}><FaRegTrashAlt /></Link>
                                         </div>

@@ -28,6 +28,7 @@ code {
 .card {
   transition: transform 0.3s ease; 
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px !important;
+  overflow: hidden;
 }
 
 .card:hover {
@@ -64,4 +65,100 @@ input {
   border-radius: 6px !important;
   border: 1px rgb(11, 83, 56) solid !important;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1) !important; /* Ajout d'une ombre interne claire */
+}
+
+.pos-absolute{
+  position: relative;
+}
+
+.cardNum{
+  position: absolute;
+    font-size: 400px;
+    left: -80%;
+    margin-top: -140px;
+    font-weight: 600;
+    font-family: 'Passion One' !important;
+    opacity: 0.07;
+
+}
+
+.type-water {
+  background-color: lightblue;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-bug {
+  background-color: lightgreen;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-flying {
+  background-color: lightskyblue;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-fire {
+  background-color: lightcoral;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-normal {
+  background-color: #A8A77A;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-electric {
+  background-color: #F7D02C;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-grass {
+  background-color: #7AC74C;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-ice {
+  background-color: #96D9D6;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-fighting {
+  background-color: #C22E28;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-poison {
+  background-color: #A33EA1;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-ground{
+  background-color: #E2BF65;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-rock{
+  background-color: #B6A136;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-dragon{
+  background-color: #6F35FC;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-dark{
+  background-color: #705746;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-steel{
+  background-color: #B7B7CE;
+  padding: 0.2em;
+  border-radius: 8px}
+
+.type-fairy{
+  background-color: #D685AD;
+  padding: 0.2em;
+  border-radius: 8px;
 }
