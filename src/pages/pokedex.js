@@ -4,14 +4,18 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
 import SearchForm from "../components/form";
+import Navbar from "../components/navebar";
 
-function Pokedex({ pokemonId }) {
+function Pokedex() {
     // State 
-    const storedPokedex = JSON.parse(localStorage.getItem('Pokedex')) || [];
+    const storedPokedex = JSON.parse(localStorage.getItem('pokedex')) || [];
 
     const [pokedex, setPokedex] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filteredPokedex, setFilteredPokedex] = useState([])
+
+
+
 
     // Comportment 
     useEffect(() => {
@@ -51,6 +55,7 @@ function Pokedex({ pokemonId }) {
 
     return (
         <div className="container">
+            <Navbar />
             <SearchForm pokemons={pokedex} setFilteredPokemons={setFilteredPokedex} />
 
             <Link onClick={cliePokedex}><FaRegTrashAlt /></Link>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PokemonDetails from "../components/pokemonDetail";
 import { Link, useParams } from 'react-router-dom';
+import Navbar from "../components/navebar";
 
 
 function Pokemon(props) {
@@ -9,6 +10,7 @@ function Pokemon(props) {
 
     return (
         <>
+            <Navbar />
 
             <PokemonDetails pokemonId={id} />
         </>

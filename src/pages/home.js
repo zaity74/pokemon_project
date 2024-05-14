@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CardItems from "../components/card";
 import { Form } from "react-router-dom";
+import Navbar from "../components/navebar";
+
+
 
 function Home() {
     // State 
@@ -10,17 +13,22 @@ function Home() {
     return (
 
         <div>
+            <Navbar />
+            <br></br>
+
+
             <form />
-            <nav>
-                <div className="nav-wrapper teal">
-                    <a href="#" className="brand-logo center">Pokédox</a>
-                </div>
-            </nav>
+
+            <br></br>
+            <br></br>
+
             <div>
                 <h1 style={{ textAlign: 'center' }}>Liste des pokémons</h1>
             </div>
             <CardItems />
+
         </div>
+
     );
 }
 

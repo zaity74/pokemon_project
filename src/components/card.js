@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import SearchForm from "./form";
+import { Alert } from "bootstrap";
+import Navbar from "./navebar";
+
+
 
 function CardItems() {
     //State
@@ -33,10 +37,12 @@ function CardItems() {
         fetchData();
     }, []);
 
-    const handleaddtopokedex = (id) => {
+    const handleaddtopokedex = (id, name) => {
 
         if (pokedex.some(pokemon => pokemon.id === id)) {
+            alert('le pokemon a été deja ajouter au pokedex');
             return;
+
         }
 
         const pokemonToAdd = pokemonRes.find(pokemon => pokemon.id === id);
@@ -47,12 +53,18 @@ function CardItems() {
         localStorage.setItem("pokedex", JSON.stringify([...storedPokedex, pokemonToAdd]));
 
 
+        alert("Le Pokemon" + "  " + name + " " + " a été bien ajouter au pokedex")
+        console.log(name);
     }
+
+
 
 
     //Affichage
     return (
+
         <div className="container">
+
             <SearchForm pokemons={pokemonRes} setFilteredPokemons={setFilteredPokemons} />
 
 
@@ -109,7 +121,7 @@ function CardItems() {
                                                 ))}
                                             </ul>
 
-                                            <button type="button" class="btn btn-danger" onClick={() => handleaddtopokedex(pokemon.id)}>Ajouter aux Pokédex</button>
+                                            <button type="button" class="btn btn-danger" onClick={() => handleaddtopokedex(pokemon.id, pokemon.name)} >Ajouter aux Pokédex</button>
                                         </div>
                                     </div>
                                 </div>
