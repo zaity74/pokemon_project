@@ -7,25 +7,23 @@ import Navbar from "../components/navebar";
 
 function Home() {
     // State 
+    const [pokedexCount, setPokedexCount] = useState('') || null;
+    const storedPokedex = JSON.parse(localStorage.getItem('pokedex')) || [];
 
     // Effects
 
     return (
 
         <div>
-            <Navbar />
+            <Navbar pokedexCount={pokedexCount} setPokedexCount={setPokedexCount} storedPokedex={storedPokedex} />
             <br></br>
-
-
             <form />
-
             <br></br>
             <br></br>
-
             <div>
-                <h1 style={{ textAlign: 'center' }}>Liste des pokémons</h1>
+                <h1 style={{ textAlign: 'center' }}><span className="styledTitle">PokéAPI</span> (Liste de Pokémons)</h1>
             </div>
-            <CardItems />
+            <CardItems pokedexCount={pokedexCount} setPokedexCount={setPokedexCount} storedPoke={storedPokedex}/>
 
         </div>
 

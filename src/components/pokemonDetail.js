@@ -35,7 +35,8 @@ function PokemonDetails({ pokemonId }) {
                     <div className="row">
                         <div className="col s12 m8 offset-m2">
                             <div>
-                                <h1 style={{ textAlign: 'center' }}>Détails du pokémon : {pokemon.name}</h1>
+                                <h1 style={{ textAlign: 'center' }}>
+                                    <span className="styledTitle">Détails du pokémon</span> : {pokemon.name}</h1>
                             </div>
                             <div className="card horizontal hoverable">
                                 <div className="card-image" style={{ flex: 'none' }}>

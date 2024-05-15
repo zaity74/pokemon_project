@@ -4,12 +4,14 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import SearchForm from "./form";
 import { Alert } from "bootstrap";
-import Navbar from "./navebar";
-import transform from "./pokemonTypeColor";
+import { transform, transformStyle, addSymbole } from "./pokemonTypeColor";
+import { FaRandom } from "react-icons/fa";
+import { BsPlusLg } from "react-icons/bs";
+import { IoMdArrowDropright } from "react-icons/io";
+import BtnFilter from "./btnFilter";
 
 
-
-function CardItems() {
+function CardItems({setPokedexCount, pokedexCount, storedPoke}) {
     //State
     const [pokemonRes, setPokemonRes] = useState([]);
     const [isAdded, setIsAdded] = useState({});
@@ -39,35 +41,52 @@ function CardItems() {
         fetchData();
     }, []);
 
-    // Récupérer isAdded du localStorage lors du chargement de la page
     useEffect(() => {
+        // Vérifier si le tableau pokedex dans le localStorage est vide
+        const storedPokedex = JSON.parse(localStorage.getItem("pokedex")) || [];
+        if (storedPokedex.length === 0) {
+            // Si le tableau pokedex est vide, définir isAdded à false
+            setIsAdded({});
+            // Vider également le tableau isAdded dans le localStorage
+            localStorage.removeItem("isAdded");
+        }
+    }, []);
+
+    useEffect(() => {
+        // Récupérer isAdded du localStorage lors du chargement de la page
         const savedIsAdded = JSON.parse(localStorage.getItem("isAdded"));
         if (savedIsAdded) {
             setIsAdded(savedIsAdded);
         }
     }, []);
     
-    
-  
-
+    // Ajout au pokodex
     const handleaddtopokedex = (id, name) => {
-        if (pokedex.some(pokemon => pokemon.id === id)) {
-            alert('le pokemon a déjà été ajouté au pokedex');
+        // Vérifier si le Pokémon est déjà présent dans le Pokédex
+        const storedPokedex = JSON.parse(localStorage.getItem("pokedex")) || [];
+        const pokemonAlreadyAdded = storedPokedex.some(pokemon => pokemon.id === id);
+    
+        // Si le Pokémon est déjà présent, afficher un message d'alerte et arrêter la fonction
+        if (pokemonAlreadyAdded) {
+            alert(`Le Pokemon ${name} est déjà présent dans le Pokédex. ❌`);
             return;
         }
-    
         const pokemonToAdd = pokemonRes.find(pokemon => pokemon.id === id);
-    
+        
+        // Update PokedexCount 
+        if (!pokemonAlreadyAdded ) {
+            setPokedexCount(pokedexCount + 1);   
+        }
         try {
             // Vérifier la taille actuelle du localStorage
             const currentStorageSize = JSON.stringify(localStorage).length;
-        
+    
             // Taille approximative du nouvel ID ajouté
             const idSize = JSON.stringify({ id }).length;
-        
+    
             // Limite de stockage maximale (5 Mo)
             const maxStorageSize = 5 * 1024 * 1024; // 5 Mo en octets
-        
+    
             // Vérifier si l'ajout du nouvel ID dépasse la limite de stockage
             if (currentStorageSize + idSize > maxStorageSize) {
                 // Vider le localStorage
@@ -76,25 +95,79 @@ function CardItems() {
                 alert("La limite de stockage du localStorage a été atteinte. Le pokedex a été vidé.");
                 return;
             }
-        
+    
             // Ajouter au localStorage
-            const storedPokedex = JSON.parse(localStorage.getItem("pokedex")) || [];
             localStorage.setItem("pokedex", JSON.stringify([...storedPokedex, pokemonToAdd]));
-        
+    
             // Ajouter l'ID du Pokémon ajouté à isAdded
             setIsAdded(prevIsAdded => {
                 const newIsAdded = { ...prevIsAdded, [id]: true };
                 localStorage.setItem("isAdded", JSON.stringify(newIsAdded));
                 return newIsAdded;
             });
-        
-            alert("Le Pokemon " + name + " a été ajouté au pokedex avec succès.");
+    
+            alert("Le Pokemon " + name + " a été ajouté au pokedex avec succès. 🔥🔥");
         } catch (error) {
             // Gérer l'erreur
             console.error("Erreur lors de l'ajout au localStorage :", error);
             alert("Une erreur est survenue lors de l'ajout au pokedex. Veuillez réessayer plus tard.");
         }
     }
+
+    // Ajout aleatoire au pokodex
+    const addRandomPokemons = () => {
+        // Vérifier si le Pokédex est vide
+        const storedPokedex = JSON.parse(localStorage.getItem('pokedex')) || [];
+        if (storedPokedex.length > 0) {
+            return; // Si le Pokédex n'est pas vide, ne rien faire
+        }
+    
+        // Ajouter 12 Pokémon aléatoires
+        const randomPokemonIds = Array.from({ length: 12 }, () => Math.floor(Math.random() * pokemonRes.length) + 1); // IDs aléatoires entre 1 et pokemonRes.length
+        const randomPokemons = pokemonRes.filter(pokemon => randomPokemonIds.includes(pokemon.id));
+    
+        console.log(randomPokemons, 'show me random');
+    
+        // Extraire les IDs des pokemons aléatoires
+        const randomPokemonIdsArray = randomPokemons.map(pokemon => pokemon.id);
+    
+        // Update PokedexCount 
+        if (randomPokemons.length > 0) {
+            setPokedexCount(randomPokemons.length);   
+        }
+    
+        try {
+            // Mettre à jour le localStorage et le state
+            localStorage.setItem('pokedex', JSON.stringify(randomPokemons));
+            setPokedex(randomPokemons);
+
+            alert('Vos pokémon ont été ajouter aléatoirement au Pokédex ! 🫡')
+    
+            // Construire un objet avec chaque ID de pokemon renvoyant true
+            const newIsAdded = {};
+            randomPokemonIdsArray.forEach(id => {
+                newIsAdded[id] = true;
+            });
+    
+            setIsAdded(prevIsAdded => {
+                const updatedIsAdded = { ...prevIsAdded, ...newIsAdded }; // Fusionner avec l'état précédent
+                localStorage.setItem("isAdded", JSON.stringify(updatedIsAdded));
+                return updatedIsAdded;
+            });
+    
+            return randomPokemonIdsArray;
+        } catch (error) {
+            // Gérer l'erreur
+            console.error("Erreur lors de l'ajout au localStorage :", error);
+            alert("Une erreur est survenue lors de l'ajout au pokedex. Veuillez réessayer plus tard.");
+            return []; // En cas d'erreur, renvoyer un tableau vide
+        }
+    };
+    
+    
+    
+
+
 
     
 
@@ -105,90 +178,102 @@ function CardItems() {
     return (
 
         <div className="container">
-
-            <SearchForm pokemons={pokemonRes} setFilteredPokemons={setFilteredPokemons} />
-
-
+        
+        <SearchForm pokemons={pokemonRes} setFilteredPokemons={setFilteredPokemons} />
+        <div className="section-action">
+            <Link onClick={addRandomPokemons}><FaRandom /> Ajout aleatoire</Link>
+            <BtnFilter pokemons={pokemonRes} setFilteredPokemons={setFilteredPokemons} filteredPokemons={filteredPokemons} />
+        </div>
             {loading ? (
                 <p className="text-center">Page Loading...</p>
             ) : (
                 <div className="row row-cols-1 row-cols-md-3">
-                    {filteredPokemons.length > 0 ? filteredPokemons.map((pokemon, id) => (
-                        <div key={id} className="col">
-
-                            <div className="card mb-3">
-                                <div className="row g-0">
-                                    <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                        <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid" style={{ objectFit: 'cover', width: '80px' }} />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body pos-absolute" style={{ marginLeft: '20px' }}>
-                                            <Link to={`/pokemon/${pokemon.id}`}>
-                                                <h5 className="card-title">{pokemon.name}</h5>
-                                            </Link>
-                                            <p className="card-text cardNum">{pokemon.id}</p>
-                                            <p className="card-text">Types: {pokemon.types.map((type) => type.type.name).join(', ')}</p>
-                                            <p className="card-text">Stats:</p>
-                                            <ul>
-                                                {pokemon.stats.map((stat, index) => (
-                                                    <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
-                                                ))}
-                                            </ul>
-                                            <button 
-                                                type="button" 
-                                                className={isAdded[pokemon.id] ? "btn btn-success" : "btn btn-danger"} 
-                                                onClick={() => handleaddtopokedex(pokemon.id, pokemon.name)} 
-                                            >
-                                                Ajouter aux Pokédex
-                                            </button>
-
+                   {
+                        filteredPokemons.length > 0 ? filteredPokemons.map((pokemon, id) => (
+                            <div key={id} className="col">
+                                <div className="card mb-3">
+                                    <div className="row g-0">
+                                        <div className="align-items-center justify-content-center relative-pos">
+                                            <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid pokemon-img" style={{ objectFit: 'cover' }} />
+                                        </div>
+                                        <div className="col-md-8 texte">
+                                            <div className="card-body pos-absolute" style={{ marginLeft: '20px' }}>
+                                                <Link to={`/pokemon/${pokemon.id}`}>
+                                                    <h5 className="card-title">{pokemon.name}</h5>
+                                                </Link>
+                                                <p className="card-text cardNum" data-num={pokemon.id}>{pokemon.id}</p>
+                                                <p className="card-text">
+                                                    Types: {pokemon.types.map((type, index) => (
+                                                        <span key={index} style={transform(type.type.name)} className={transformStyle(type.type.name)}>
+                                                           {addSymbole(type.type.name)}{type.type.name}
+                                                        </span>
+                                                    ))}
+                                                </p>
+                                                <p className="card-text">Stats:</p>
+                                                <ul>
+                                                    {pokemon.stats.map((stat, index) => (
+                                                        <li key={index}>
+                                                             <IoMdArrowDropright /><p style={{ fontWeight: 600 }}>{stat.stat.name}:</p> {stat.base_stat}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <button 
+                                                    type="button" 
+                                                    className={isAdded[pokemon.id] ? "btn btn-success" : "btn btn-danger"} 
+                                                    onClick={() => handleaddtopokedex(pokemon.id, pokemon.name)} 
+                                                >
+                                                    <BsPlusLg />
+                                                    Ajouter aux Pokédex
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-                    )) : pokemonRes && pokemonRes.map((pokemon, id) => (
-                        <div key={id} className="col">
-
-                            <div className="card mb-3">
-                                <div className="row g-0">
-                                    <div className="col-md-4 d-flex align-items-center justify-content-center relative-pos">
-                                        <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid pokemon-img" style={{ objectFit: 'cover'}} />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body pos-absolute" style={{ marginLeft: '20px' }}>
-                                            <Link to={`/pokemon/${pokemon.id}`}>
-                                                <h5 className="card-title">{pokemon.name}</h5>
-                                            </Link>
-                                            <p className="card-text cardNum">{pokemon.id}</p>
-                                            {/* <p className="card-text" >Types: {pokemon.types.map((type) => type.type.name ).join(', ')}</p> */}
-                                            <p className="card-text">
-                                                Types: {pokemon.types.map((type, index) => (
-                                                    <span key={index} className={transform(type.type.name)}>{type.type.name}</span>
-                                                ))}
-                                            </p>
-                                            <p className="card-text">Stats:</p>
-                                            <ul>
-                                                {pokemon.stats.map((stat, index) => (
-                                                    <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
-                                                ))}
-                                            </ul>
-
-                                            <button 
-                                                type="button" 
-                                                className={isAdded[pokemon.id] ? "btn btn-success" : "btn btn-danger"} 
-                                                onClick={() => handleaddtopokedex(pokemon.id, pokemon.name)} 
-                                            >
-                                                Ajouter aux Pokédex
-                                            </button>
+                        )) : 
+                        pokemonRes && pokemonRes.map((pokemon, id) => (
+                            <div key={id} className="col">
+                                <div className="card mb-3">
+                                    <div className="row g-0">
+                                        <div className="align-items-center justify-content-center relative-pos">
+                                            <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid pokemon-img" style={{ objectFit: 'cover' }} />
+                                        </div>
+                                        <div className="col-md-8 texte">
+                                            <div className="card-body pos-absolute" style={{ marginLeft: '20px' }}>
+                                                <Link to={`/pokemon/${pokemon.id}`}>
+                                                    <h5 className="card-title" style={{ zIndex: 20 }}>{pokemon.name}</h5>
+                                                </Link>
+                                                <p className="card-text cardNum" data-num={pokemon.id}>{pokemon.id}</p>
+                                                <p className="card-text">
+                                                    Types: {pokemon.types.map((type, index) => (
+                                                        <span key={index} style={transform(type.type.name)} className={transformStyle(type.type.name)}>{addSymbole(type.type.name)}{type.type.name}</span>
+                                                    ))}
+                                                </p>
+                                                <p className="card-text">Stats:</p>
+                                                <ul>
+                                                    {pokemon.stats.map((stat, index) => (
+                                                        <li key={index}>
+                                                             <IoMdArrowDropright /> <p style={{ fontWeight: 600 }}>{stat.stat.name}:</p> {stat.base_stat}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <button 
+                                                    type="button" 
+                                                    className={isAdded[pokemon.id] ? "btn btn-success" : "btn btn-danger"} 
+                                                    onClick={() => handleaddtopokedex(pokemon.id, pokemon.name)} 
+                                                >
+                                                    <BsPlusLg />
+                                                    Ajouter aux Pokédex
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        ))
+                    }
 
-                        </div>
-                    ))}
+
                 </div>
             )
             }

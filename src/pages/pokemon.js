@@ -7,10 +7,12 @@ import Navbar from "../components/navebar";
 function Pokemon(props) {
 
     const { id } = useParams();
+    const [pokedexCount, setPokedexCount] = useState('') || null;
+    const storedPokedex = JSON.parse(localStorage.getItem('pokedex')) || [];
 
     return (
         <>
-            <Navbar />
+            <Navbar pokedexCount={pokedexCount} setPokedexCount={setPokedexCount} storedPokedex={storedPokedex} />
             <br></br>
             <br></br>
             <PokemonDetails pokemonId={id} />
