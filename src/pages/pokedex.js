@@ -26,9 +26,9 @@ function Pokedex() {
 
         //permet de recuperer les donnees de storepokdex pour les ajouter dans pokedex
         if (storedPokedex) {
-            setPokedex(storedPokedex)
+            setPokedex(storedPokedex); 
+            console.log(storedPokedex, "storedPokedex here");
             setLoading(false);
-            console.log(pokedex);
         }
     }, [])
 
@@ -87,7 +87,7 @@ function Pokedex() {
                 <span className="styledTitle">Mon Pokedex </span> : {getPokedexLevel(storedPokedex)}</h1>
         </div>
         <div className="container">
-            <SearchForm pokemons={pokedex} setFilteredPokemons={setFilteredPokedex} />
+            <SearchForm pokemons={storedPokedex} setFilteredPokemons={setFilteredPokedex} />
 
             <Link onClick={cliePokedex}><FaRegTrashAlt />Vider le pokedex</Link>
 
@@ -133,7 +133,7 @@ function Pokedex() {
                                             <div className="col-md-8 texte">
                                                 <div className="card-body pos-absolute" style={{ marginLeft: '20px' }}>
                                                     <Link to={`/pokemon/${pokemon.id}`}>
-                                                        <h5 className="card-title" style={{ zIndex: 20 }}>{pokemon.name}</h5>
+                                                        <h5 className="card-title">{pokemon.name}</h5>
                                                     </Link>
                                                     <p className="card-text cardNum" data-num={pokemon.id}>{pokemon.id}</p>
                                                     <p className="card-text">

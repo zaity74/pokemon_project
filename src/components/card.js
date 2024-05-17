@@ -21,20 +21,29 @@ function CardItems({setPokedexCount, pokedexCount, storedPoke}) {
 
     //comportment 
     useEffect(() => {
+        const fetchPokemonData = async (url) => {
+            try {
+                const response = await axios.get(url);
+                return response.data;
+            } catch (error) {
+                console.error(`Erreur lors de la récupération des données pour ${url}:`, error);
+                throw error;
+            }
+        };
+        
         const fetchData = async () => {
             try {
-                const firstRes = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=151`);
+                const firstRes = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
                 const pokemonStartData = firstRes.data.results;
-
-                const pokemonDetail = await Promise.all(pokemonStartData.map(async (pokemon) => {
-                    const pokemonResponse = await axios.get(pokemon.url);
-                    return pokemonResponse.data
-                }))
-
+        
+                const pokemonDetailPromises = pokemonStartData.map(pokemon => fetchPokemonData(pokemon.url));
+                const pokemonDetail = await Promise.all(pokemonDetailPromises);
+        
                 setPokemonRes(pokemonDetail);
-                setLoading(false);
             } catch (error) {
-                console.error('Erreur:', error);
+                console.error('Erreur lors de la récupération des données:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -61,17 +70,20 @@ function CardItems({setPokedexCount, pokedexCount, storedPoke}) {
     }, []);
     
     // Ajout au pokodex
-    const handleaddtopokedex = (id, name) => {
+    const handleaddtopokedex = (pokemonId, pokemonName) => {
         // Vérifier si le Pokémon est déjà présent dans le Pokédex
         const storedPokedex = JSON.parse(localStorage.getItem("pokedex")) || [];
-        const pokemonAlreadyAdded = storedPokedex.some(pokemon => pokemon.id === id);
+        const pokemonAlreadyAdded = storedPokedex.some(pokemon => pokemon.id === pokemonId);
     
         // Si le Pokémon est déjà présent, afficher un message d'alerte et arrêter la fonction
         if (pokemonAlreadyAdded) {
-            alert(`Le Pokemon ${name} est déjà présent dans le Pokédex. ❌`);
+            alert(`Le Pokemon ${pokemonName} est déjà présent dans le Pokédex. ❌`);
             return;
         }
-        const pokemonToAdd = pokemonRes.find(pokemon => pokemon.id === id);
+
+        const pokemonData = pokemonRes.find(pokemon => pokemon.id === pokemonId);
+        const { id, name, types, sprites, stats } = pokemonData && pokemonData;
+        const pokemonToAdd = { id, name, types, sprites, stats };
         
         // Update PokedexCount 
         if (!pokemonAlreadyAdded ) {
@@ -106,7 +118,7 @@ function CardItems({setPokedexCount, pokedexCount, storedPoke}) {
                 return newIsAdded;
             });
     
-            alert("Le Pokemon " + name + " a été ajouté au pokedex avec succès. 🔥🔥");
+            alert("Le Pokemon " + pokemonName + " a été ajouté au pokedex avec succès. 🔥🔥");
         } catch (error) {
             // Gérer l'erreur
             console.error("Erreur lors de l'ajout au localStorage :", error);
