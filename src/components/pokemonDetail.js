@@ -61,7 +61,7 @@ function PokemonDetails({ pokemonId }) {
                                                 <tr>
                                                     <td>Types</td>
                                                     <td>
-                                                        {pokemon.types.map((type, index) => (
+                                                        {pokemon && pokemon.types.map((type, index) => (
                                                             <span key={index} className={type.type.name}>{type.type.name}</span>
                                                         ))}
                                                     </td>

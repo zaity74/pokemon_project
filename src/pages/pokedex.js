@@ -96,7 +96,7 @@ function Pokedex() {
             ) : (
                 <div className="row row-cols-1 row-cols-md-3">
                         {
-                            filteredPokedex.length > 0 ? filteredPokedex.map((pokemon, id) => (
+                            filteredPokedex.length > 0 ? filteredPokedex && filteredPokedex.map((pokemon, id) => (
                                 <div key={id} className="col">
                                     <div className="card mb-3">
                                         <div className="row g-0">
@@ -110,7 +110,7 @@ function Pokedex() {
                                                     </Link>
                                                     <p className="card-text cardNum" data-num={pokemon.id}>{pokemon.id}</p>
                                                     <p className="card-text">
-                                                        Types: {pokemon.types.map((type, index) => (
+                                                        Types: {pokemon && pokemon.types.map((type, index) => (
                                                             <span key={index} className={transformStyle(type.type.name)} style={transform(type.type.name)}>{addSymbole(type.type.name)}{type.type.name}</span>
                                                         ))}
                                                     </p>
@@ -137,7 +137,7 @@ function Pokedex() {
                                                     </Link>
                                                     <p className="card-text cardNum" data-num={pokemon.id}>{pokemon.id}</p>
                                                     <p className="card-text">
-                                                        Types: {pokemon.types.map((type, index) => (
+                                                        Types: {pokemon && pokemon.types.map((type, index) => (
                                                             <span key={index} className={transformStyle(type.type.name)} style={transform(type.type.name)}>{addSymbole(type.type.name)}{type.type.name}</span>
                                                         ))}
                                                     </p>
