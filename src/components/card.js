@@ -200,7 +200,7 @@ function CardItems({ setPokedexCount, pokedexCount, storedPoke }) {
                                             </Link>
                                             <p className="card-text cardNum" data-num={pokemon.id}>{pokemon.id}</p>
                                             <p className="card-text">
-                                                Types: {pokemon.types.map((type, index) => (
+                                                Types: {pokemon && pokemon.types.map((type, index) => (
                                                     <span key={index} style={transform(type.type.name)} className={transformStyle(type.type.name)}>
                                                         {addSymbole(type.type.name)}{type.type.name}
                                                     </span>
@@ -208,7 +208,7 @@ function CardItems({ setPokedexCount, pokedexCount, storedPoke }) {
                                             </p>
                                             <p className="card-text">Stats:</p>
                                             <ul>
-                                                {pokemon.stats.map((stat, index) => (
+                                                {pokemon && pokemon.stats.map((stat, index) => (
                                                     <li key={index}>
                                                         <IoMdArrowDropright /><p style={{ fontWeight: 600 }}>{stat.stat.name}:</p> {stat.base_stat}
                                                     </li>
@@ -248,7 +248,7 @@ function CardItems({ setPokedexCount, pokedexCount, storedPoke }) {
                                             </p>
                                             <p className="card-text">Stats:</p>
                                             <ul>
-                                                {pokemon.stats.map((stat, index) => (
+                                                {pokemon && pokemon.stats.map((stat, index) => (
                                                     <li key={index}>
                                                         <IoMdArrowDropright /> <p style={{ fontWeight: 600 }}>{stat.stat.name}:</p> {stat.base_stat}
                                                     </li>
