@@ -9,7 +9,7 @@ function SearchForm({ pokemons, setFilteredPokemons }) {
         setTerm(searchTerm);
 
         const filteredPokemons = pokemons.filter((pokemon) => {
-            return pokemon.name.toLowerCase().startsWith(searchTerm); // Filtrer par la première lettre
+            return pokemon && pokemon.name.toLowerCase().startsWith(searchTerm); // Filtrer par la première lettre
         });
 
         setFilteredPokemons(filteredPokemons);
