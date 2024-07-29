@@ -24,7 +24,7 @@ function BtnFilter({ pokemons, setFilteredPokemons, filteredPokemons }) {
     };
 
     // Créer un ensemble de types uniques
-    const uniqueTypes = [...new Set(pokemons && pokemons.flatMap((pokemon) => pokemon.types.map((type) => type.type.name)))];
+    const uniqueTypes = [...new Set(pokemons && pokemons.flatMap((pokemon) => pokemon?.types.map((type) => type.type.name)))];
 
     return (
         <div className="container typeFilter">
