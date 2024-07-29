@@ -206,7 +206,7 @@ function CardItems({setPokedexCount, pokedexCount, storedPoke}) {
                                 <div className="card mb-3">
                                     <div className="row g-0">
                                         <div className="align-items-center justify-content-center relative-pos">
-                                            <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid pokemon-img" style={{ objectFit: 'cover' }} />
+                                            <img src={pokemon?.sprites?.front_default} alt="pokemon image" className="img-fluid pokemon-img" style={{ objectFit: 'cover' }} />
                                         </div>
                                         <div className="col-md-8 texte">
                                             <div className="card-body pos-absolute" style={{ marginLeft: '20px' }}>
@@ -248,7 +248,7 @@ function CardItems({setPokedexCount, pokedexCount, storedPoke}) {
                                 <div className="card mb-3">
                                     <div className="row g-0">
                                         <div className="align-items-center justify-content-center relative-pos">
-                                            <img src={pokemon.sprites.front_default} alt="pokemon image" className="img-fluid pokemon-img" style={{ objectFit: 'cover' }} />
+                                            <img src={pokemon?.sprites?.front_default} alt="pokemon image" className="img-fluid pokemon-img" style={{ objectFit: 'cover' }} />
                                         </div>
                                         <div className="col-md-8 texte">
                                             <div className="card-body pos-absolute" style={{ marginLeft: '20px' }}>
