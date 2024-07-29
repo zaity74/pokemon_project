@@ -11,7 +11,7 @@ function BtnFilter({ pokemons, setFilteredPokemons, filteredPokemons }) {
         setSelectedType(type);
 
         const filteredPokemon = pokemons.filter((pokemon) => {
-            return pokemon.types.some((pokemonType) => pokemonType.type.name === type);
+            return pokemon && pokemon.types.some((pokemonType) => pokemonType.type.name === type);
         });
 
         setFilteredPokemons(filteredPokemon);
